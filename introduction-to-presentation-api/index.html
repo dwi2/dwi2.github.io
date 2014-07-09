@@ -41,9 +41,9 @@
 class: center, middle, inverse
 # Introdution to Presentaion API
 
-Tzu-Lin Huang (dwi2) tzhuang@mozilla.com
+Tzu-Lin Huang [:dwi2] tzhuang@mozilla.com
 
-July 8th 2014
+July 15th 2014
 
 ---
 class: inverse
@@ -64,6 +64,9 @@ class: inverse
 ### Gaming
 
 ### Media Flining to Multiple Screens
+
+--
+> Fling different media content to different displays at the same time
 
 ---
 class: inverse
@@ -123,9 +126,25 @@ class: inverse
 ---
 class: inverse
 
+# API
+
+### `navigator.presentation`
+
+### two event handlers on `navigator.presentation`
+
+> `onavailablechange` (AvailableChangeEvent)
+
+> `onpresent` (PresentChange)
+
+### Start presentation session by invokcing method `resuestSession()`
+
+
+---
+class: inverse
+
 # API - NavigatorPresentation
 
-```
+```IDL
 interface NavigatorPresentation : EventTarget {
   PresentationSession requestSession(DOMString url);
   attribute EventHandler onavailablechange;
@@ -141,8 +160,8 @@ class: inverse
 
 # API - AvailableChangeEvent
 
-### Fired at the primary screen's NavigatorPresentation object, when screen availability changes
-```
+### Fired at the **primary screen's NavigatorPresentation** object, when screen availability changes
+```IDL
 [Constructor(DOMString type, optional AvailableChangeEventInit eventInitDict)]
 interface AvailableChangeEvent : Event {
   readonly attribute boolean available;
@@ -158,9 +177,9 @@ class: inverse
 
 # API - PresentEvent
 
-### Fired at the secondary screen's NavigatorPresentation object, when the presentation session is established
+### Fired at the **secondary screen's NavigatorPresentation** object, when the presentation session is established
 
-```
+```IDL
 [Constructor(DOMString type, optional PresentEventInit eventInitDict)]
 interface PresentEvent : Event {
   readonly attribute PresentationSession session;
@@ -176,7 +195,7 @@ class: inverse
 
 # API - PresentationSession
 
-```
+```IDL
 enum PresentationSessionState { "connected", "disconnected" /*, "resumed" */ };
 
 interface PresentationSession : EventTarget {
@@ -191,7 +210,7 @@ interface PresentationSession : EventTarget {
 ---
 class: inverse
 
-# Code Snippet Example
+# Example Snippet
 
 ```html
 /* controller.html */
