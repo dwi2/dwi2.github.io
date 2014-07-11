@@ -55,6 +55,20 @@ class: inverse
 
 ---
 class: inverse
+# Presentation API
+## To make secondary displays available to the web
+
+![](assets/1.png)
+
+---
+class: inverse
+# Presentation API - cont'd
+## To make secondary displays available to the web
+
+![](assets/2.png)
+
+---
+class: inverse
 # Use Cases
 
 ### Presentations
@@ -237,7 +251,7 @@ function show() {
         console.log('Disconnected.');
         break;
     }
-  };
+  };u/
 }
 </script>
 ```
@@ -260,6 +274,15 @@ navigator.presentation.onpresent = function(e) {
   };
 };
 ```
+
+---
+class: inverse
+#Some open questions and thoughts
+
+1. It seems apps have to handle presentation resuming by them selves
+2. Can we call `presentation.requestSession()` to present cross-origin/cross-domain contents?
+3. How to discover secondary display? (SSDP?)
+
 
 ---
 class: inverse
