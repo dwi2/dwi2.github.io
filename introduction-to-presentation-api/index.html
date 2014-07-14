@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>WebRTC introduction - application point of view</title>
+    <title>Introdution to Presentaion API</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -258,6 +258,12 @@ function show() {
 
 ---
 class: inverse
+## State Transition on Originating Page (controller.html)
+
+![](assets/state_originating_page.png)
+
+---
+class: inverse
 
 # Uasge on Remote Screen
 ```javascript
@@ -274,14 +280,19 @@ navigator.presentation.onpresent = function(e) {
   };
 };
 ```
+---
+class: inverse
+## State Transition on Presentation Page (remote screen)
+
+![](assets/state_presentation_page.png)
 
 ---
 class: inverse
 #Some open questions and thoughts
 
-1. It seems apps have to handle presentation resuming by them selves
-2. Can we call `presentation.requestSession()` to present cross-origin/cross-domain contents?
-3. How to discover secondary display? (SSDP?)
+### 1. It seems apps have to handle presentation resuming by them selves
+### 2. Can we call `presentation.requestSession()` to present cross-origin/cross-domain contents?
+### 3. How to discover secondary display? (SSDP?)
 
 
 ---
