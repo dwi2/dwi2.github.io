@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introdution to Dialer app of FxOS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Droid Serif';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .inverse {
+        background: #272822;
+        color: #eee;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse .remark-code{
+        text-shadow: none;
+      }
+      .mobile-screenshot > img {
+        width: 30%;
+        z-index: 10;
+      }
+      .left > img {
+        position: absolute;
+        top: 25%;
+        left: 3%;
+      }
+      .center > img {
+        position: absolute;
+        top: 25%;
+        left: 35%;
+      }
+      .right > img{
+        position: absolute;
+        top: 25%;
+        left: 67%;
+      }
+      img {
+        width: 100%;
+      }
+      strong {
+        color: #ff0
+      }
+      a {
+        color: #0ff;
+      }
+      .large {
+        font-size: 30px
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+# Introdution to Dialer app of FxOS
+
+Tzu-Lin Huang [:dwi2] tzhuang@mozilla.com
+
+Sep. ?? 2014
+
+---
+class: inverse
+# Topics
+
+- .large[Entry points]
+- .large[HTML structure]
+- .large[Telephony API]
+
+---
+class: inverse
+# Entry Points
+- .large[app launch]
+- .large[system message
+    - bluetooth-dialer-command
+    - notification
+    - telephony-call-ended
+    - ussd-received
+
+- .large[activities]
+    - dial
+
+---
+class: inverse
+# views
+
+.left.mobile-screenshot[![keyboard](assets/keyboard-view-texted.png)]
+.center.mobile-screenshot[![contacts](assets/contacts-view-texted.png)]
+.right.mobile-screenshot[![call-log](assets/call-log-view-texted.png)]
+
+---
+class: inverse
+# The techniques behind view switching
+
+## .bb-tabpanel\[role="tabpanel"\]
+### .bb-tabpanel\[role="tabpanel"\]
+.right.mobile-screenshot[![](assets/keypad-panel.png)]
+
+---
+class: inverse
+# The techniques behind view switching
+
+## a\[role="tab"\]
+.right.mobile-screenshot[![](assets/option-keypad.png)]
+
+---
+class: inverse
+# :target
+### communications.gaiamobile.org/dialer/index.html**#call-log-view**
+
+
+--
+### **:target** represent the unique element with id matching **call-log-view**
+
+---
+class: inverse
+# :target
+```css
+body .bb-tablist [aria-selected="true"] ~.bb-tabpanel {
+  visibility: hidden;
+}
+
+body .bb-tablist :target .bb-tabpanel {
+  z-index: -1;
+  visibility: visible;
+}
+```
+
+    </textarea>
+    <script src="js/remark.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
