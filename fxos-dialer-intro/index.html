@@ -72,29 +72,45 @@ class: inverse
 # Topics
 
 - .large[Entry points]
+
 - .large[HTML structure]
+
+- .large[Components]
+
 - .large[Telephony API]
 
 ---
 class: inverse
 # Entry Points
 - .large[app launch]
-- .large[system message
+
+- .large[system message]
+
     - bluetooth-dialer-command
+
     - notification
+
     - telephony-call-ended
+
     - ussd-received
 
 - .large[activities]
+
     - dial
 
 ---
 class: inverse
-# views
+# HTML structure: views
 
 .left.mobile-screenshot[![keyboard](assets/keyboard-view-texted.png)]
 .center.mobile-screenshot[![contacts](assets/contacts-view-texted.png)]
 .right.mobile-screenshot[![call-log](assets/call-log-view-texted.png)]
+
+---
+class: inverse
+# HTML structure
+
+- .large[section#views]
 
 ---
 class: inverse
@@ -133,6 +149,41 @@ body .bb-tablist :target .bb-tabpanel {
   visibility: visible;
 }
 ```
+
+---
+class: inverse
+# :target
+
+.right.mobile-screenshot[![](assets/keypad-panel.png)]
+
+1. display .bb-tabpanel under :target
+
+```css
+body .bb-tablist :target .bb-tabpanel {
+  z-index: -1;
+  visibility: visible;
+}
+```
+
+---
+class: inverse
+# Components
+
+- .large[KeypadManager] - `/shared/js/dialer/keypad.js`
+
+- .large[NavbarManager] - `dialer/js/dialer.js`
+
+- .large[CallHandler] - `dialer/js/dialer.js`
+
+- .large[CallLog] - `dialer/js/call_log.js`
+
+- .large[CallLogDBManager] - `dialer/js/call_log_db.js`
+
+- .large[MmiManager] - `dialer/js/mmi.js`
+
+- .large[MmiUi] - `dialer/js/mmi_ui.js`
+
+- .large[Other utilities and helpers]
 
     </textarea>
     <script src="js/remark.js" type="text/javascript">
