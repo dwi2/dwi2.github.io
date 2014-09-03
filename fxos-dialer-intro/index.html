@@ -77,6 +77,8 @@ class: inverse
 
 - .large[Components]
 
+- .large[Code flows]
+
 - .large[Telephony API]
 
 ---
@@ -194,21 +196,116 @@ body .bb-tablist :target .bb-tabpanel {
 class: inverse
 # Components
 
-- .large[KeypadManager] - `/shared/js/dialer/keypad.js`
+- .large[KeypadManager]
 
-- .large[NavbarManager] - `dialer/js/dialer.js`
+- .large[NavbarManager]
 
-- .large[CallHandler] - `dialer/js/dialer.js`
+- .large[CallHandler]
 
-- .large[CallLog] - `dialer/js/call_log.js`
+- .large[CallLog]
 
-- .large[CallLogDBManager] - `dialer/js/call_log_db.js`
+- .large[CallLogDBManager]
 
 - .large[MmiManager] - `dialer/js/mmi.js`
 
 - .large[MmiUi] - `dialer/js/mmi_ui.js`
 
 - .large[Other utilities and helpers]
+
+
+---
+class: inverse
+# Components - `KeypadManager`
+- `/shared/js/dialer/keypad.js`
+
+- .large[Handle all keypad operations]
+
+- .large[Dependencies]
+
+  - `TonePlayer`
+
+      - Play dial tone on device
+
+  - `DtmfTone`
+
+      - Send tone to remote via `mozTelephony` (when on call)
+
+  - `FontSizeManager`
+
+      - Control display, size, and direction of phone number dialed on screen
+
+---
+class: inverse
+# Components - `KeypadManager`
+
+- .large[Dependencies] cont'd
+
+    - CallScreen (not used in dialer)
+
+---
+class: inverse
+# Components - `NavbarManager`
+
+- `dialer/js/dialer.js`
+
+- .large[Handle view switching among]
+
+  - keyboard-view
+
+  - contacts-view
+
+  - call-log-view
+
+---
+class: inverse
+# Components - `CallHandler`
+
+- `dialer/js/dialer.js`
+
+- Handle all system messages in Dialer
+
+  - telephony-call-ended
+
+  - activity
+
+  - notification
+
+  - bluetooth-dialer-command
+
+  - ussd-received
+
+- Handle behavior after user press `dial`
+
+- Submodule
+
+  - `TelephonyHelper`
+
+      - a proxy of `mozMobileConnections` and `mozTelephony` API
+
+      - rely on `TonePlayer`
+
+---
+class: inverse
+# Components - `CallLog` and `CallLogDBManager`
+
+- `dialer/js/call_log.js`
+
+- `dialer/js/call_log_db.js`
+
+- haven't read
+
+---
+class: inverse
+# Components - `MmiManager`
+
+- `dialer/js/mmi.js`
+
+
+
+
+---
+class: inverse
+# Code flows
 
     </textarea>
     <script src="js/remark.js" type="text/javascript">
