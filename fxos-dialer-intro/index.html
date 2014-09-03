@@ -100,6 +100,20 @@ class: inverse
 
 ---
 class: inverse
+# HTML structure
+
+.large[body]
+
+- .large[section#views]
+
+    - li#**call-log-view**
+
+    - li#**contacts-view**
+
+    - li#**keyboard-view**
+
+---
+class: inverse
 # HTML structure: views
 
 .left.mobile-screenshot[![keyboard](assets/keyboard-view-texted.png)]
@@ -108,10 +122,13 @@ class: inverse
 
 ---
 class: inverse
-# HTML structure
+# HTML structure: within view
 
-- .large[section#views]
+### Take keyboard-view as example ###
 
+.large[li#**keyboard-view**]
+- .large[a#option-keypad[href=#**keyboard-view**]]
+- .large[div#keypad-panel.bb-tabpanel\[role=tabpanel\]]
 ---
 class: inverse
 # The techniques behind view switching
@@ -140,7 +157,7 @@ class: inverse
 class: inverse
 # :target
 ```css
-body .bb-tablist [aria-selected="true"] ~.bb-tabpanel {
+.bb-tablist .bb-tabpanel {
   visibility: hidden;
 }
 
@@ -156,7 +173,15 @@ class: inverse
 
 .right.mobile-screenshot[![](assets/keypad-panel.png)]
 
-1. display .bb-tabpanel under :target
+### 1. Hide all .bb-tabpanel ###
+
+```css
+.bb-tablist .bb-tabpanel {
+  visibility: hidden;
+}
+```
+
+### 2. display .bb-tabpanel under :target ###
 
 ```css
 body .bb-tablist :target .bb-tabpanel {
