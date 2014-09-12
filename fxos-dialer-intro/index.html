@@ -126,9 +126,14 @@ class: inverse
 
 ### Take keyboard-view as example ###
 
-.large[li#**keyboard-view**]
-- .large[a#option-keypad[href=#**keyboard-view**]]
-- .large[div#keypad-panel.bb-tabpanel\[role=tabpanel\]]
+- li#**keyboard-view**
+
+    - a#option-keypad[href=#**keyboard-view**]
+
+    - div#keypad-panel.bb-tabpanel\[role=tabpanel\]
+
+.right.mobile-screenshot[![](assets/within-keyboard-view.png)]
+
 ---
 class: inverse
 # The techniques behind view switching
@@ -180,6 +185,7 @@ class: inverse
   visibility: hidden;
 }
 ```
+--
 
 ### 2. display .bb-tabpanel under :target ###
 
@@ -202,7 +208,7 @@ class: inverse
 
 - .large[MmiManager]
 
-- .large[MmiUi]
+- .large[MmiUI]
 
 - .large[CallLog and CallLogDBManager]
 
@@ -246,11 +252,26 @@ class: inverse
 
     - `SimPicker`
 
+        - view of selection between SIM 1 and SIM 2
+
     - `CallLogDBManager`
 
     - `CallScreen` (not used in dialer)
 
 .right.mobile-screenshot[![](assets/multi_sim_action_button.png)]
+
+
+---
+class: inverse
+# SimPicker
+
+- `shared/js/sim_picker.js`
+
+- `shared/elements/sim_picker.html`
+
+    - sim_picker.html is lazily loaded
+
+.right.mobile-screenshot[![](assets/sim_picker.png)]
 
 ---
 class: inverse
@@ -324,7 +345,7 @@ class: inverse
 
 - `dialer/js/mmi.js`
 
-- handling all logic related to MMI
+- handling all logic related to MMI and USSD
 
 - MMI (Man-Machine Interface)
 
@@ -349,6 +370,12 @@ class: inverse
 class: inverse
 # Components - `MmiManager`
 
+- .large[USSD (Unstructured Supplementary Service Data)]
+
+    - Example:
+
+        - A message of account balance on pre-paid card after MO call terminated
+
 - .large[dependencies]
 
     - `MobileOperator`
@@ -360,7 +387,7 @@ class: inverse
 
 ---
 class: inverse
-# Components - `MmiUi`
+# Components - `MmiUI`
 
 - `dialer/js/mmi_ui.js`
 
@@ -384,7 +411,11 @@ class: inverse
 
 ---
 class: inverse
-# Interaction between `MmiManager` and `MmiUi`
+# Interaction between `MmiManager` and `MmiUI`
+
+- .large[User initiated]
+
+
 
 - .large[**TBD**]
 
