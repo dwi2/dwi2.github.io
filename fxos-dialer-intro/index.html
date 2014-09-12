@@ -65,7 +65,7 @@ class: center, middle, inverse
 
 Tzu-Lin Huang [:dwi2] tzhuang@mozilla.com
 
-Sep. ?? 2014
+Sep. 15, 2014
 
 ---
 class: inverse
@@ -75,9 +75,7 @@ class: inverse
 
 - .large[HTML structure]
 
-- .large[Components]
-
-- .large[Code flows]
+- .large[Major Components and Interactions]
 
 - .large[Telephony API]
 
@@ -194,7 +192,7 @@ body .bb-tablist :target .bb-tabpanel {
 
 ---
 class: inverse
-# Components
+# Major Components
 
 - .large[KeypadManager]
 
@@ -202,13 +200,11 @@ class: inverse
 
 - .large[CallHandler]
 
-- .large[CallLog]
+- .large[MmiManager]
 
-- .large[CallLogDBManager]
+- .large[MmiUi]
 
-- .large[MmiManager] - `dialer/js/mmi.js`
-
-- .large[MmiUi] - `dialer/js/mmi_ui.js`
+- .large[CallLog and CallLogDBManager]
 
 - .large[Other utilities and helpers]
 
@@ -220,7 +216,7 @@ class: inverse
 
 - .large[Handle all keypad operations]
 
-- .large[Dependencies]
+- .large[dependencies]
 
   - `TonePlayer`
 
@@ -238,9 +234,23 @@ class: inverse
 class: inverse
 # Components - `KeypadManager`
 
-- .large[Dependencies] cont'd
+- .large[more dependencies]
 
-    - CallScreen (not used in dialer)
+    - `CallHandler`
+
+        - process most `call`-related actions
+
+    - `MultiSimActionButton`
+
+        - handle behavior of action button (e.g. dial)
+
+    - `SimPicker`
+
+    - `CallLogDBManager`
+
+    - `CallScreen` (not used in dialer)
+
+.right.mobile-screenshot[![](assets/multi_sim_action_button.png)]
 
 ---
 class: inverse
@@ -256,13 +266,19 @@ class: inverse
 
   - call-log-view
 
+- .large[Dependencies]
+
+    - `AccessibilityHelper`
+
+    - `CallLog`
+
 ---
 class: inverse
 # Components - `CallHandler`
 
 - `dialer/js/dialer.js`
 
-- Handle all system messages in Dialer
+- .large[Handle all system messages in Dialer]
 
   - telephony-call-ended
 
@@ -274,15 +290,86 @@ class: inverse
 
   - ussd-received
 
-- Handle behavior after user press `dial`
+- .large[Handle behavior after user press `dial`]
 
-- Submodule
+---
+class: inverse
+# Components - `CallHandler`
+
+- .large[Dependencies]
 
   - `TelephonyHelper`
 
       - a proxy of `mozMobileConnections` and `mozTelephony` API
 
-      - rely on `TonePlayer`
+  - `KeypadManager`
+
+  - `NavbarManager`
+
+  - `MmiManager`
+
+  - `Notification` Web API and `NotificationHelper`
+
+  - `Contacts`
+
+  - `CallLog` and `CallLogDBManager`
+
+  - `Voicemail`
+
+      - a helper of mozVoicemail
+
+---
+class: inverse
+# Components - `MmiManager`
+
+- `dialer/js/mmi.js`
+
+- handling all logic related to MMI
+
+- MMI (Man-Machine Interface)
+
+    - define requirements of the user procedures for call control and supplementary service control
+
+    - keypad on dialer is the only user input interface (think about feature phone)
+
+    - Many phone manufactures use MMI as entrance to engineering mode
+
+        - most android phones: `*#*#4636#*#*`
+
+    - Examples:
+
+        - query IMEI: `*#06#`
+
+        - query call forwading status: `*#21#`
+
+        - CHT users query roaming status: `*135#`
+
+
+---
+class: inverse
+# Components - `MmiManager`
+
+- .large[dependencies]
+
+    - `MobileOperator`
+
+        - helpers to identify service prodiver and currently camped network
+
+    - `NotificationHelper` and `Notification` Web API
+
+
+---
+class: inverse
+# Components - `MmiUi`
+
+- `dialer/js/mmi_ui.js`
+
+- Handle display and user input of MMI/USSD
+
+    - everything under `article#mmi-screen`
+
+.right.mobile-screenshot[![](assets/cht_roaming.png)]
+
 
 ---
 class: inverse
@@ -292,20 +379,35 @@ class: inverse
 
 - `dialer/js/call_log_db.js`
 
-- haven't read
-
----
-class: inverse
-# Components - `MmiManager`
-
-- `dialer/js/mmi.js`
-
-
+- haven't read it yet
 
 
 ---
 class: inverse
-# Code flows
+# Interaction between `MmiManager` and `MmiUi`
+
+- .large[**TBD**]
+
+
+---
+class: inverse
+# Interaction between KeypadManager and CallHandler
+
+- .large[**TBD**]
+
+
+---
+class: inverse
+# Interaction with other Apps
+
+- .large[Callscreen app]
+
+    - ** TBD **
+
+- .large[Contacts app]
+
+    - Dialer has an iframe to embed Contacts (in #contacts-view)
+
 
     </textarea>
     <script src="js/remark.js" type="text/javascript">
