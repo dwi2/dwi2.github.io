@@ -97,6 +97,8 @@ class: inverse
 
     - dial
 
+- .large[`index.html#keyboard-view`]
+
 ---
 class: inverse
 # HTML structure
@@ -110,6 +112,13 @@ class: inverse
     - li#**contacts-view**
 
     - li#**keyboard-view**
+
+- form#sim-picker[hidden]
+
+- article#mmi-screen[hidden]
+
+- ...
+
 
 ---
 class: inverse
@@ -127,9 +136,9 @@ class: inverse
 
 - li#**keyboard-view**
 
-    - a#option-keypad[href=#**keyboard-view**]
+    - **a**#option-keypad[href=#**keyboard-view**]
 
-    - div#keypad-panel.bb-tabpanel\[role=tabpanel\]
+    - div#keypad-panel**.bb-tabpanel**\[role=tabpanel\]
 
 .right.mobile-screenshot[![](assets/within-keyboard-view.png)]
 
@@ -138,7 +147,7 @@ class: inverse
 # The techniques behind view switching
 
 ## .bb-tabpanel\[role="tabpanel"\]
-### .bb-tabpanel\[role="tabpanel"\]
+
 .right.mobile-screenshot[![](assets/keypad-panel.png)]
 
 ---
@@ -155,7 +164,7 @@ class: inverse
 
 
 --
-### **:target** represent the unique element with id matching **call-log-view**
+### **:target** represent the unique element with id **call-log-view**
 
 ---
 class: inverse
@@ -286,6 +295,8 @@ class: inverse
 
   - call-log-view
 
+- .large[Ensure all necessary JS and css files are loaded before switching view]
+
 - .large[Dependencies]
 
     - `AccessibilityHelper`
@@ -310,7 +321,9 @@ class: inverse
 
   - ussd-received
 
-- .large[Handle behavior after user press `dial`]
+- .large[Handle things after user press `dial`]
+
+    - `call()` and `callEnded()`
 
 ---
 class: inverse
@@ -320,7 +333,7 @@ class: inverse
 
   - `TelephonyHelper`
 
-      - a proxy of `mozMobileConnections` and `mozTelephony` API
+      - helpers of `mozMobileConnections` and `mozTelephony` API
 
   - `KeypadManager`
 
@@ -336,7 +349,7 @@ class: inverse
 
   - `Voicemail`
 
-      - a helper of mozVoicemail
+      - helpers of mozVoicemail
 
 ---
 class: inverse
@@ -346,7 +359,7 @@ class: inverse
 
 - handling all logic related to MMI and USSD
 
-- MMI (Man-Machine Interface)
+- MMI (Man-Machine Interface) [3GPP 22.030](http://www.3gpp.org/DynaReport/22030.htm)
 
     - define requirements of the user procedures for call control and supplementary service control
 
@@ -354,7 +367,7 @@ class: inverse
 
     - Many phone manufactures use MMI as entrance to engineering mode
 
-        - most android phones: `*#*#4636#*#*`
+        - for most android phones: `*#*#4636#*#*`
 
     - Examples:
 
@@ -405,7 +418,7 @@ class: inverse
 
 - `dialer/js/call_log_db.js`
 
-- haven't read it yet
+- haven't read them yet
 
 
 ---
