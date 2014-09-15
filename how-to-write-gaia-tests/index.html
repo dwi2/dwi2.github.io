@@ -147,7 +147,7 @@ class: inverse
 
 2. .large[Start Firefox Nightly]
 
-    `/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org:8080`
+    `/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org`
 
 ### Or Just Simply Run this command under Gaia directory
 
@@ -174,7 +174,7 @@ class: inverse
 
 2. .large[Start Firefox Nightly]
 
-    `/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org:8080`
+    `/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org`
 
 3. .large[Run WebSocket Server]
 
@@ -186,10 +186,89 @@ class: inverse
 
 
 ---
-class:inverse
+class: inverse
 # Run unit tests from command line
 
 ![](assets/Gu_snapshot.png)
+
+
+---
+class: inverse
+# Run unit tests as you save
+
+### On Mac OSX
+
+1. .large[Build Gaia for Firefox Nightly]
+
+    `make clean;DEBUG=1 make`
+
+2. .large[Start Firefox Nightly]
+
+    `/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org`
+
+3. .large[Run WebSocket Server]
+
+    `make test-agent-server`
+
+4. .large[Edit and save test files as you wish]
+
+
+---
+class: inverse
+- When you hit save on
+
+    - `some_module.js` or `some_module_test.js`
+
+- Test server will run related test suites
+
+![](assets/Gu_run_as_you_save.png)
+
+
+---
+class: inverse
+- An example snippet of Gaia unit test
+
+```js
+/* global SomeGlobalObject, SomeMocks */
+'use strict';
+require('/path/to/some_mocks.js');
+require('/path/to/test/target.js');
+var mocksForTestTarget = new MocksHelper(['SomeMocks']).init();
+
+suite('system/HardwareButtons', function() {
+  mocksForTestTarget.attachTestHelpers();
+
+  suiteSetup(function(done) {
+    // some suite setup task
+    done();
+  })
+  suiteTeardown(function(done) {
+    // some suite teardown task
+    done();
+  });
+
+  setup(function(done) {
+    // some test setup task
+    done();
+  });
+  teardown(function(done) {
+    // some test teardown task
+    done();
+  })
+
+  test('test description', function() {
+    // test codes
+  });
+});
+
+```
+
+
+---
+class: inverse
+# How to Write Gaia Unit Tests
+
+- **TBD**
 
 ---
 class: inverse
