@@ -71,6 +71,16 @@ Tzu-Lin Huang [:dwi2] tzhuang@mozilla.com
 Sep. 18, 2014
 
 ---
+class: center, middle, inverse
+# How To Write Gaia Tests
+
+
+---
+class: center, middle, inverse
+# How To ~~Write~~ Read/Run Gaia Tests
+
+
+---
 class: inverse
 # Gaia-try
 
@@ -130,7 +140,7 @@ class: inverse
 class: inverse
 # Gaia Unit Tests
 
-- .large[unit test files are located in each app]
+- .large[Unit test files are located in each app]
 
     - `apps/<app_folder>/test/unit/`
 
@@ -139,6 +149,10 @@ class: inverse
 - .large[Naming convention]
 
     - `hardware_buttons_test.js` tests `hardware_buttons.js`
+
+- .large[How about js module in `shared/js/`]
+
+    - under `apps/sharedtest/`
 
 ---
 class: inverse
@@ -164,7 +178,8 @@ class: inverse
 2. .large[Start Firefox Nightly]
 
     ```sh
-    /Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org
+    /Applications/FirefoxNightly.app/Contents/MacOS/firefox \
+      -profile <path/to/profile> app://test-agent.gaiamobile.org
     ```
 
 ### Or Just Simply Run this command under Gaia directory
@@ -197,7 +212,8 @@ class: inverse
 2. .large[Start Firefox Nightly]
 
     ```sh
-    /Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org
+    /Applications/FirefoxNightly.app/Contents/MacOS/firefox \
+      -profile <path/to/profile> app://test-agent.gaiamobile.org
     ```
 
 3. .large[Run WebSocket Server]
@@ -235,7 +251,8 @@ class: inverse
 2. .large[Start Firefox Nightly]
 
     ```sh
-    /Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org
+    /Applications/FirefoxNightly.app/Contents/MacOS/firefox \
+      -profile <path/to/profile> app://test-agent.gaiamobile.org
     ```
 
 3. .large[Run WebSocket Server]
@@ -330,6 +347,100 @@ class: inverse
     }
 
     ```
+
+---
+class: inverse
+# Test file structure
+
+- .large[suiteSetup() and suiteTeardown() run once before and after each suite]
+
+- .large[setup() and teardown() run once before and after each test]
+
+- .large[Good suite/test naming really helps when you debug unit tests]
+
+
+---
+class: inverse
+# Some tips - Mock
+
+- If test subject has dependency on Web API, mock it
+
+```js
+suite('shared/SettingsListener', function() {
+  var realSettings;
+  ...
+
+  setup(function() {
+    realSettings = window.navigator.mozSettings;
+    window.navigator.mozSettings = MockNavigatorSettings;
+    ...
+  });
+
+  teardown(function() {
+    window.navigator.mozSettings.mTeardown();
+    window.navigator.mozSettings = realSettings;
+    ...
+  });
+```
+
+- There are a lot of Web API mocks existed in each `test/unit/`
+
+
+---
+class: inverse
+# Some tips - Mock
+
+- MocksHelper could save you some time if your mock object has pattern like this:
+
+    ```js
+    // Mock window.RealObject
+    var MockRealObject = {
+      someMethod: function() {
+        //
+      },
+      mSetup: function() {
+        // extra setup task of mock object
+      },
+      mTeardown: function() {
+        // extra teardown task of mock object
+      }
+    }
+    ```
+
+  - Using MocksHelper
+
+    ```js
+    var mocksForTestTarget = new MocksHelper(['MockRealObject']).init();
+    suite('some test suite', function() {
+      // automatically attach mock object into `window` during suiteSetup()
+      // and revert it back to real object during suiteTeardown()
+      mocksForTestTarget.attachTestHelpers();
+    });
+    ```
+
+---
+class: inverse
+# Some tips - window.setTimeout in test subject
+
+- If you have `window.setTimeout` in test subject, use [Sinon's FakeTimers](http://sinonjs.org/docs/#clock) to prevent intermittent test failure
+
+```js
+var clock;
+
+setup(function() {
+ clock = this.sinon.useFakeTimers();
+});
+
+teardown(function() {
+  clock.restore();
+});
+
+test('some test involving window.setTimeout', function() {
+  ...
+  clock.tick(1000); // synchronously move clock 1 second forward
+  ...
+});
+```
 
 ---
 class: inverse
