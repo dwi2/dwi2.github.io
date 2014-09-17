@@ -116,15 +116,29 @@ class: inverse
 
 - .large[Rely on following frameworks]
 
-    - mocha
+    - [mocha](http://visionmedia.github.io/mocha/)
 
-    - chai
+    - [chai](http://chaijs.com/)
 
-    - sinon
+    - [sinon](http://sinonjs.org/)
 
-    - blanket (test coverage tool)
+    - [blanket](http://blanketjs.org/) (test coverage tool)
 
 - .large[Could be run on b2g-desktop and Firefox Nightly]
+
+---
+class: inverse
+# Gaia Unit Tests
+
+- .large[unit test files are located in each app]
+
+    - `apps/<app_folder>/test/unit/`
+
+    - One test file for each test subject (usually)
+
+- .large[Naming convention]
+
+    - `hardware_buttons_test.js` tests `hardware_buttons.js`
 
 ---
 class: inverse
@@ -143,15 +157,21 @@ class: inverse
 ### On Mac OSX
 1. .large[Build Gaia for Firefox Nightly]
 
-    `make clean;DEBUG=1 make`
+    ```sh
+    make clean;DEBUG=1 make
+    ```
 
 2. .large[Start Firefox Nightly]
 
-    `/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org`
+    ```sh
+    /Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org
+    ```
 
 ### Or Just Simply Run this command under Gaia directory
 
-`bin/gaia-test`
+```sh
+bin/gaia-test
+```
 
 ---
 class: inverse
@@ -170,19 +190,27 @@ class: inverse
 
 1. .large[Build Gaia for Firefox Nightly]
 
-    `make clean;DEBUG=1 make`
+    ```sh
+    make clean;DEBUG=1 make
+    ```
 
 2. .large[Start Firefox Nightly]
 
-    `/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org`
+    ```sh
+    /Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org
+    ```
 
 3. .large[Run WebSocket Server]
 
-    `make test-agent-server`
+    ```sh
+    make test-agent-server
+    ```
 
 4. .large[Run test command at another console/tty]
 
-    `make test-agent-test`
+    ```sh
+    make test-agent-test
+    ```
 
 
 ---
@@ -200,15 +228,21 @@ class: inverse
 
 1. .large[Build Gaia for Firefox Nightly]
 
-    `make clean;DEBUG=1 make`
+    ```sh
+    make clean;DEBUG=1 make
+    ```
 
 2. .large[Start Firefox Nightly]
 
-    `/Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org`
+    ```sh
+    /Applications/FirefoxNightly.app/Contents/MacOS/firefox -profile <path/to/profile> app://test-agent.gaiamobile.org
+    ```
 
 3. .large[Run WebSocket Server]
 
-    `make test-agent-server`
+    ```sh
+    make test-agent-server
+    ```
 
 4. .large[Edit and save test files as you wish]
 
@@ -235,7 +269,7 @@ require('/path/to/some_mocks.js');
 require('/path/to/test/target.js');
 var mocksForTestTarget = new MocksHelper(['SomeMocks']).init();
 
-suite('system/HardwareButtons', function() {
+suite('name of test suite', function() {
   mocksForTestTarget.attachTestHelpers();
 
   suiteSetup(function(done) {
@@ -268,7 +302,34 @@ suite('system/HardwareButtons', function() {
 class: inverse
 # How to Write Gaia Unit Tests
 
-- **TBD**
+- `suite`
+
+    - Unit of related tests
+
+    - `suite` can be embedded in another `suite`
+
+    - We usually group tests that shared same codes in `suite`
+
+    ```js
+    suite('name of test suite', function() {
+      suiteSetup(function() {
+        ...
+      }
+      suiteTeardown(function() {
+        ...
+      }
+
+      suite('name of inner test suite', function() {
+        suiteSetup(function() {
+          ...
+        }
+        suiteTeardown(function() {
+          ...
+        }
+      }
+    }
+
+    ```
 
 ---
 class: inverse
