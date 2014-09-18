@@ -52,6 +52,9 @@
       a {
         color: #0ff;
       }
+      .three-quarter-img > img{
+        width: 75%;
+      }
       .large {
         font-size: 30px
       }
@@ -444,13 +447,175 @@ test('some test involving window.setTimeout', function() {
 
 ---
 class: inverse
-# What is missing?
+# Some tips: Test subject contains asynchronous code or callback
 
-- .large[Performance Tests]
+- Try to make it as much synchronous as possible
+
+    - `settings_listener.js`
+
+    ```js
+    var SettingsListener = {
+      ...
+      observe: function sl_observe(name, defaultValue, callback) {
+        ...
+        var settingChanged = function settingChanged(evt) {
+          callback(evt.settingValue);
+        };
+        settings.addObserver(name, settingChanged);
+        ...
+    }
+    ```
+
+---
+class: inverse
+# Some tips: Test subject contains asynchronous code or callback
+
+- `settings_listener_test.js`
+
+```sh
+ test('observe', function() {
+    var testKey = 'some.sample.key';
+    SettingsListener.observe(testKey, 'old', onChanged);
+    ...
+    // trigger callback
+    MockNavigatorSettings.mTriggerObservers(testKey, {settingValue: 'new'});
+    assert.isTrue(onChanged.calledWith('new'));
+  });
+```
+
+---
+class: inverse
+# Gaia UI Tests (JavaScript)
+
+- .large[Integration tests]
+
+    - Simulate users interacting with apps.
+
+- .large[Tests are written in JavaScript and run via Marionette]
+
+.three-quarter-img[![](assets/marionette-basic-diagram.png)]
+
+
+---
+class: inverse
+# Gaia UI Tests (JavaScript)
+
+- .large[Test feature as a whole]
+
+    - across multiple modules or event across multiple apps
+
+- .large[Test files are located in each app]
+
+    - `apps/<app_folder>/test/marionette/`
+
+- .large[Tests run against b2g-desktop]
+
+---
+class: inverse
+# Run Gaia UI Tests
+
+- .large[Setup]
+
+    - Run this command to install dependencies under gaia directory
+
+    ```sh
+    npm install
+    ```
+
+- .large[Run all tests]
+
+    ```sh
+    make test-integration
+    ```
+
+- .large[Run tests for a specific app]
+
+    ```sh
+    APP=<app_name> make test-integration
+    ```
+
+- .large[Run specific test]
+
+    ```sh
+    TEST_FILES=</path/to/test/file> make test-integration
+    ```
+
+---
+class: inverse
+# What are common things for UI tests to do?
+
+- Launch an app
+
+- Click or swipe inside of an app
+
+- Read text in an area of an app
+
+- Wait for the UI to update with some new content or a new view
+
+- Type text into input fields
+
+- Switch between apps
+
+- Close apps
+
+
+---
+class: inverse
+# References
+
+- Gaia Unit Tests
+
+    - https://developer.mozilla.org/en-US/Firefox_OS/Platform/Automated_testing/Gaia_unit_tests
+
+- Gaia UI Tests (JavaScript)
+
+    - https://developer.mozilla.org/en-US/Firefox_OS/Platform/Automated_testing/Gaia_integration_tests
+
+    - Marionette JS Client doc
+
+        - [http://mozilla-b2g.github.io/marionette-js-client/api-docs/](http://mozilla-b2g.github.io/marionette-js-client/api-docs/)
+
+---
+class: inverse
+# References
+
+- Gaia UI Tests (Python)
+
+    -  Marionette Client document (Python)
+
+        - http://marionette-client.readthedocs.org/en/latest/#
+
+    - Gaia UI Tests doc lists
+
+        - https://developer.mozilla.org/en-US/Firefox_OS/Platform/Automated_testing/gaia-ui-tests
+
+    - Running Gaia UI tests
+
+        - https://developer.mozilla.org/en-US/Firefox_OS/Platform/Automated_testing/gaia-ui-tests/Gaia_UI_Tests_Run_Tests
+
+    - Running Gaia UI tests and integration tests for developers
+
+        - https://developer.mozilla.org/en-US/Firefox_OS/Running_Tests_on_Firefox_OS_for_Developers
+
+    - My memo of running Gaia UI Test (Python) - https://gist.github.com/dwi2/747da88f50299b8243d8
+
+---
+class: inverse
+# What is missing?
 
 - .large[Gaia Build Unit tests - Gbu]
 
-- .large[Linter - Li]
+    - Test correctness of build script
+
+- .large[Gaia Linter - Li]
+
+    - Examine coding style and convention
+
+- .large[Performance Tests]
+
+    - https://developer.mozilla.org/en-US/Firefox_OS/Platform/Automated_testing/Gaia_performance_tests
+
+    - http://presentboldly.com/eliperelman/firefox-os-app-launch-performance-condensed
 
     </textarea>
     <script src="js/remark.js" type="text/javascript">
